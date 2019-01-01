@@ -8,6 +8,7 @@ from textblob import TextBlob
 # nltk.download('wordnet')
 # nltk.download('brown')
 # nltk.download('punkt')
+# nltk.download('averaged_perceptron_tagger')
 
 wn = nltk.WordNetLemmatizer()
 ps = nltk.PorterStemmer()
@@ -24,14 +25,19 @@ blob = TextBlob(file)
 for phrase in blob.noun_phrases:
     if phrase not in no_dup_nouns:
         no_dup_nouns.append(phrase)
-print('-------No Dup Noun Phrases ----------\n', len(no_dup_nouns), '\n', no_dup_nouns)
+# print('-------No Dup Noun Phrases ----------\n', len(no_dup_nouns), '\n', no_dup_nouns)
 
 sentence = list()
 for phrase in blob.sentences:
     if phrase not in sentence:
         sentence.append(phrase)
-print('-------No Dup Sentences ----------\n', len(sentence), '\n', sentence)
+# print('-------No Dup Sentences ----------\n', len(sentence), '\n', sentence)
 
+print('-------------Tags----------')
+tags = blob.tags
+for word, tag in tags:
+        if tag == 'VBD':
+                print(word)
 
 no_punct = "".join([char for char in file if char not in string.punctuation]).lower()
 tokens = re.split('\W+', no_punct)
